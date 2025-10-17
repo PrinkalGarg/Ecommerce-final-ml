@@ -62,7 +62,7 @@ function Collection() {
       fd.append("image", imageFile);
 
       // Change the URL to your image search endpoint
-      const resp = await fetch(`http://localhost:3000/api/product/search-image?k=8`, {
+      const resp = await fetch(`https://ecommerce-backend-g6b5.onrender.com/api/product/search-image?k=8`, {
         method: "POST",
         body: fd,
       });
