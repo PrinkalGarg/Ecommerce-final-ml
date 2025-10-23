@@ -1,65 +1,58 @@
-﻿# E-Commerce Platform
+# 🛍️ E-Commerce Platform with AI-Powered Visual Search
 
-A full-stack e-commerce platform built with modern web technologies, featuring a customer-facing frontend, admin dashboard, backend API, and AI-powered image embedding service.
+A full-stack e-commerce application featuring AI-powered visual search capabilities using Jina AI, built with React, Node.js, and MongoDB.
+
+## 🌟 Features
+
+### 🎯 Core Features
+- **AI-Powered Visual Search**: Upload an image to find similar products using Jina AI embeddings
+- **Product Management**: Complete CRUD operations for products with multiple images
+- **User Authentication**: Secure login/registration with JWT tokens
+- **Shopping Cart**: Add, update, and manage cart items with size selection
+- **Order Management**: Place orders with multiple payment methods (COD, Stripe, Razorpay)
+- **Admin Panel**: Dedicated admin interface for product and order management
+- **Responsive Design**: Mobile-first design with Tailwind CSS
+
+### 🤖 AI Features
+- **Visual Search**: Upload product images to find visually similar items
+- **Image Embeddings**: Automatic generation of embeddings for all product images
+- **Similarity Matching**: Cosine similarity-based product recommendations
+- **Multi-image Support**: Support for multiple product images with individual embeddings
 
 ## 🏗️ Architecture
 
-This project consists of four main components:
+### Frontend Applications
+- **Customer Frontend** (`Frontend/`): React-based customer-facing application
+- **Admin Panel** (`admin/`): React-based admin dashboard for product management
 
-- **Frontend** - Customer-facing React application
-- **Admin** - Admin dashboard for product and order management
-- **Backend** - Node.js/Express API server
-- **ML_Model** - AI service for image embeddings using CLIP
-
-## 🚀 Features
-
-### Customer Features
-- Product browsing and search
-- Shopping cart functionality
-- User authentication and registration
-- Order placement and tracking
-- Responsive design with modern UI
-- Payment integration (Stripe & Razorpay)
-
-### Admin Features
-- Product management (add, edit, delete)
-- Order management and tracking
-- User management
-- Dashboard analytics
-
-### AI Features
-- Image embedding generation using CLIP model
-- Batch image processing
-- Similarity search capabilities
+### Backend
+- **API Server** (`Backend/`): Node.js/Express REST API with MongoDB
+- **AI Integration**: Jina AI for visual search and embeddings
+- **Cloud Storage**: Cloudinary for image storage and management
 
 ## 🛠️ Tech Stack
 
-### Frontend & Admin
-- **React 18** - UI framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Styling
-- **React Router** - Navigation
-- **Framer Motion** - Animations
-- **Axios** - HTTP client
-- **React Toastify** - Notifications
+### Frontend
+- **React 18** with Vite
+- **React Router** for navigation
+- **Tailwind CSS** for styling
+- **Framer Motion** for animations
+- **Axios** for API calls
+- **React Toastify** for notifications
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM
-- **JWT** - Authentication
-- **Bcrypt** - Password hashing
-- **Multer** - File uploads
-- **Cloudinary** - Image storage
-- **Stripe & Razorpay** - Payment processing
+- **Node.js** with Express
+- **MongoDB** with Mongoose
+- **JWT** for authentication
+- **Multer** for file uploads
+- **Cloudinary** for image storage
+- **Jina AI** for visual search
+- **Bcrypt** for password hashing
 
-### ML Service
-- **FastAPI** - Python web framework
-- **PyTorch** - Deep learning framework
-- **Transformers** - Hugging Face models
-- **CLIP** - Vision-language model
-- **Pillow** - Image processing
+### AI & ML
+- **Jina AI API**: For generating image embeddings
+- **CLIP Model**: `jina-clip-v1` for visual similarity
+- **Cosine Similarity**: For matching similar products
 
 ## 📁 Project Structure
 
@@ -69,25 +62,19 @@ Ecomerce/
 │   ├── src/
 │   │   ├── component/        # Reusable components
 │   │   ├── pages/           # Page components
-│   │   ├── context/         # React context
+│   │   ├── context/         # React context (ShopContext)
 │   │   └── assets/          # Static assets
-│   └── package.json
-├── admin/                   # Admin dashboard
+├── admin/                   # Admin panel React app
 │   ├── src/
 │   │   ├── components/      # Admin components
 │   │   └── pages/          # Admin pages
-│   └── package.json
-├── Backend/                 # API server
-│   ├── config/             # Database and cloud config
+├── Backend/                 # Node.js API server
+│   ├── config/             # Database & Cloudinary config
 │   ├── controller/         # Route controllers
-│   ├── middleware/         # Auth and upload middleware
-│   ├── models/            # Database models
-│   ├── routes/            # API routes
-│   └── server.js          # Main server file
-├── ML_Model/              # AI service
-│   ├── ml_service.py      # FastAPI service
-│   ├── requirements.txt   # Python dependencies
-│   └── render.yml         # Deployment config
+│   ├── middleware/         # Auth & file upload middleware
+│   ├── models/             # MongoDB schemas
+│   ├── routes/             # API routes
+│   └── server.js           # Main server file
 └── README.md
 ```
 
@@ -95,9 +82,37 @@ Ecomerce/
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- Python 3.8+
-- MongoDB
-- Git
+- MongoDB (local or cloud)
+- Cloudinary account
+- Jina AI API key
+
+### Environment Variables
+
+Create a `.env` file in the `Backend/` directory:
+
+```env
+# Database
+MongoDB_URL=mongodb://localhost:27017
+# or MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net
+
+# JWT Secret
+JWT_SECRET=your_jwt_secret_key
+
+# Cloudinary Configuration
+Cloudinary_NAME=your_cloudinary_cloud_name
+Cloudinary_API_Key=your_cloudinary_api_key
+Cloudinary_API_SECRETE=your_cloudinary_api_secret
+
+# Jina AI Configuration
+JINA_API_KEY=your_jina_api_key
+
+# Admin Credentials
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=admin_password
+
+# Optional: Search Configuration
+SEARCH_SAMPLE_SIZE=2000
+```
 
 ### Installation
 
@@ -107,40 +122,22 @@ Ecomerce/
    cd Ecomerce
    ```
 
-2. **Backend Setup**
+2. **Install Backend Dependencies**
    ```bash
    cd Backend
    npm install
    ```
-   
-   Create a `.env` file in the Backend directory:
-   ```env
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-   CLOUDINARY_API_KEY=your_cloudinary_key
-   CLOUDINARY_API_SECRET=your_cloudinary_secret
-   STRIPE_SECRET_KEY=your_stripe_secret
-   RAZORPAY_KEY_ID=your_razorpay_key
-   RAZORPAY_KEY_SECRET=your_razorpay_secret
-   ```
 
-3. **Frontend Setup**
+3. **Install Frontend Dependencies**
    ```bash
-   cd Frontend
+   cd ../Frontend
    npm install
    ```
 
-4. **Admin Setup**
+4. **Install Admin Panel Dependencies**
    ```bash
-   cd admin
+   cd ../admin
    npm install
-   ```
-
-5. **ML Service Setup**
-   ```bash
-   cd ML_Model
-   pip install -r requirements.txt
    ```
 
 ### Running the Application
@@ -150,156 +147,140 @@ Ecomerce/
    cd Backend
    npm run server
    ```
-   Server will run on `http://localhost:5000`
+   Server will run on `http://localhost:3000`
 
-2. **Start the Frontend**
+2. **Start the Customer Frontend**
    ```bash
    cd Frontend
    npm run dev
    ```
    Frontend will run on `http://localhost:5173`
 
-3. **Start the Admin Dashboard**
+3. **Start the Admin Panel**
    ```bash
    cd admin
    npm run dev
    ```
-   Admin will run on `http://localhost:5174`
+   Admin panel will run on `http://localhost:5174`
 
-4. **Start the ML Service**
-   ```bash
-   cd ML_Model
-   uvicorn ml_service:app --reload
-   ```
-   ML service will run on `http://localhost:8000`
+## 🔧 API Endpoints
 
-## 🔧 Configuration
+### Authentication
+- `POST /api/user/register` - User registration
+- `POST /api/user/login` - User login
+- `POST /api/user/admin` - Admin login
 
-### Environment Variables
+### Products
+- `GET /api/product/list` - Get all products
+- `POST /api/product/add` - Add new product (Admin only)
+- `POST /api/product/remove` - Remove product (Admin only)
+- `POST /api/product/listsingle` - Get single product
+- `POST /api/product/search-image` - Visual search by image
 
-#### Backend (.env)
-- `MONGODB_URI` - MongoDB connection string
-- `JWT_SECRET` - Secret key for JWT tokens
-- `CLOUDINARY_*` - Cloudinary configuration for image storage
-- `STRIPE_SECRET_KEY` - Stripe payment integration
-- `RAZORPAY_*` - Razorpay payment integration
+### Orders
+- `POST /api/order/place` - Place order (COD)
+- `POST /api/order/userorder` - Get user orders
+- `GET /api/order/listadmin` - Get all orders (Admin)
+- `POST /api/order/stripe` - Stripe payment
+- `POST /api/order/razor` - Razorpay payment
 
-#### ML Service
-- `HF_CLIP_MODEL` - Hugging Face CLIP model name (default: openai/clip-vit-base-patch32)
-- `MAX_BATCH_SIZE` - Maximum batch size for image processing (default: 8)
-- `REQUEST_TIMEOUT_SEC` - Request timeout in seconds (default: 30)
+### Cart
+- `POST /api/cart/add` - Add to cart
+- `POST /api/cart/update` - Update cart
+- `POST /api/cart/get` - Get user cart
 
-## 📚 API Documentation
+## 🤖 AI Visual Search
 
-### Backend API Endpoints
+The application uses Jina AI's CLIP model for visual similarity search:
 
-#### Authentication
-- `POST /api/users/register` - User registration
-- `POST /api/users/login` - User login
-- `POST /api/users/admin/login` - Admin login
+### How it Works
+1. **Image Upload**: Users upload an image for search
+2. **Embedding Generation**: Jina AI generates embeddings for the query image
+3. **Similarity Matching**: Cosine similarity is computed against all product embeddings
+4. **Results Ranking**: Products are ranked by similarity score
 
-#### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get product by ID
-- `POST /api/products` - Create product (Admin)
-- `PUT /api/products/:id` - Update product (Admin)
-- `DELETE /api/products/:id` - Delete product (Admin)
+### Implementation Details
+- **Model**: `jina-clip-v1` for image embeddings
+- **Embedding Storage**: Each product image has its own embedding
+- **Aggregation**: Product-level embeddings are computed as mean of image embeddings
+- **Search Algorithm**: Cosine similarity with configurable sample size
 
-#### Cart
-- `GET /api/cart` - Get user cart
-- `POST /api/cart` - Add to cart
-- `PUT /api/cart/:id` - Update cart item
-- `DELETE /api/cart/:id` - Remove from cart
-
-#### Orders
-- `GET /api/orders` - Get user orders
-- `POST /api/orders` - Create order
-- `PUT /api/orders/:id` - Update order status (Admin)
-
-### ML Service API Endpoints
-
-- `GET /health` - Health check
-- `POST /embed` - Generate embedding for single image
-- `POST /embed_batch` - Generate embeddings for multiple images
-
-## 🎨 UI Components
+## 🎨 Key Components
 
 ### Frontend Components
-- **Hero** - Landing page hero section
-- **ProductDisplay** - Product showcase
-- **CartTotal** - Shopping cart summary
-- **Navbar** - Navigation bar
-- **Footer** - Site footer
+- **Hero**: Landing page hero section
+- **ProductDisplay**: Product listing and display
+- **CartTotal**: Shopping cart summary
+- **Navbar**: Navigation with cart count
+- **Footer**: Site footer with links
 
 ### Admin Components
-- **AddProduct** - Product creation form
-- **ListProduct** - Product management table
-- **Orders** - Order management
-- **SideBar** - Admin navigation
+- **AddProduct**: Product creation form with image upload
+- **ListProduct**: Product management interface
+- **Orders**: Order management dashboard
 
-## 🔐 Authentication & Authorization
+## 🔐 Authentication & Security
 
+### User Authentication
 - JWT-based authentication
-- Role-based access control (User/Admin)
-- Protected routes and API endpoints
 - Password hashing with bcrypt
+- Protected routes with middleware
 
-## 💳 Payment Integration
+### Admin Authentication
+- Separate admin login system
+- Environment-based admin credentials
+- Admin-only routes protection
 
-- **Stripe** - International payment processing
-- **Razorpay** - Indian payment gateway
-- Secure payment flow with order confirmation
+## 📱 Responsive Design
 
-## 🖼️ Image Management
-
-- **Cloudinary** integration for image storage
-- Image upload with Multer middleware
-- AI-powered image embeddings for similarity search
+- Mobile-first approach
+- Tailwind CSS for styling
+- Responsive grid layouts
+- Touch-friendly interfaces
 
 ## 🚀 Deployment
 
-### Frontend & Admin
-- Build for production: `npm run build`
-- Deploy to Vercel, Netlify, or similar platforms
+### Backend Deployment
+1. Set up MongoDB Atlas or local MongoDB
+2. Configure Cloudinary account
+3. Get Jina AI API key
+4. Set environment variables
+5. Deploy to platforms like Render, Heroku, or Vercel
 
-### Backend
-- Deploy to Heroku, Railway, or AWS
-- Ensure MongoDB Atlas connection
-- Set environment variables
-
-### ML Service
-- Deploy to Render, Railway, or cloud platforms
-- GPU support recommended for better performance
-- Configure environment variables
+### Frontend Deployment
+1. Build the production version: `npm run build`
+2. Deploy to platforms like Netlify, Vercel, or GitHub Pages
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## 📝 License
+## 📄 License
 
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
 
 ## 🆘 Support
 
-For support, email prinkalgarg03@gmail.com
+For support and questions:
+- Create an issue in the repository
+- Check the documentation
+- Review the API endpoints
 
 ## 🔮 Future Enhancements
 
+- [ ] Advanced filtering and sorting
+- [ ] Recommendation engine
 - [ ] Real-time notifications
-- [ ] Advanced search with filters
-- [ ] Product recommendations
 - [ ] Multi-language support
-- [ ] Mobile app development
 - [ ] Advanced analytics dashboard
-- [ ] Inventory management
-- [ ] Customer reviews and ratings
+- [ ] Mobile app development
+- [ ] Social login integration
+- [ ] Advanced payment methods
 
 ---
 
-
-**Built with ❤️ using React, Node.js, and AI**
+**Built with ❤️ using React, Node.js, MongoDB, and Jina AI**
